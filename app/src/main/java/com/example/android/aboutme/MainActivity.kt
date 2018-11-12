@@ -22,22 +22,35 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // setContentView
+        // Setting the content view using DataBindingUtil creates an instance of
+        // ActivityMainBinding from the supplied activity and the supplied layout. This object
+        // contains mappings between the activity and layout,
+        // and functionality to interact with them.
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        // Set the value of the myName variable that is declared and used in the layout fule.
         binding.myName = myName
 
+        // Click listener for the Done button.
         binding.done.setOnClickListener { addNickname(it) }
     }
 
+    // Click handler for the Done button.
+    // Demonstrates how data binding can be used to make code much more readable
+    // by eliminating calls to findViewById and changing data in the binding object.
     private fun addNickname(view: View) {
-
         binding.apply {
             // Set the text for nicknameText to the value in nicknameEdit.
             myName?.nickname = nicknameEdit.text.toString()
+            // Invalidate all binding expressions and request a new rebind to refresh UI
             invalidateAll()
+            // Change which views are visible
+            // Remove the EditText and the Button.
+            // With GONE they are invisible and do not occupy space.
             nicknameEdit.visibility = View.GONE
             done.visibility = View.GONE
+            
+            // Make the TextView with the nickname visible.
             nicknameText.visibility = View.VISIBLE
         }
 
